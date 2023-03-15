@@ -26,8 +26,11 @@
 	
 /********************** FUNCTION PROTOTYPE **************************************/	
 	
+ extern void Process_AnalogSignals_SeperateChannels(ADC_HandleTypeDef *hadc, U32 ADC_CHANNEL, U32 RANK);
+ extern U32  Process_AnalogSignals_ReadChannel(U8 MUX_SELECT, U8 SELECT_PIN);
+ extern void Process_AnalogSignals_GetAnalogSignals(void);
 
-	
+ extern adc_st adc_s;
 	
 	
 	

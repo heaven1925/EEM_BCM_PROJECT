@@ -93,8 +93,52 @@ typedef struct{
 	U8 dummy[MAIN_PACKEDSIZE];			//@INFO: 256 Byte
 }main_st;
 
-#define		ADC_PACKEDSIZE				0x100
+#define		ADC_PACKEDSIZE				0x100	-\
+/*	U16 x 33 ADC_VALUES;	*/			66
 typedef struct{
+
+
+		/* MUX-1 VARIABLES */
+	    U16 VOLTAGE_3V3   ; /* A0 VARIABLE */
+	    U16 VOLTAGE_VMCU; /* A1 VARIABLE */
+	    U16 VOLTAGE_5V    ; /* A2 VARIABLE */
+	    U16 VOLTAGE_12V   ; /* A3 VARIABLE */
+	    U16 VOLTAGE_24V   ; /* A4 VARIABLE */
+	   // U16 EMPTY   ; 	/* A5 VARIABLE */
+	   // U16 EMPTY   ; 	/* A6 VARIABLE */
+	   // U16 EMPTY   ; 	/* A7 VARIABLE */
+	    /* MUX-2 VARIABLES */
+	    U16 A0_IN0		  ; /* A0 VARIABLE */
+	    U16 A0_IN1		  ; /* A1 VARIABLE */
+	    U16 A0_IN2		  ; /* A2 VARIABLE */
+	    U16 A0_IN3		  ; /* A3 VARIABLE */
+	    U16 A0_IN4	 	  ; /* A4 VARIABLE */
+	    U16 A0_IN5	   	  ; /* A5 VARIABLE */
+	    U16 A0_IN6	 	  ; /* A6 VARIABLE */
+	    U16 A0_IN7	  	  ; /* A7 VARIABLE */
+	    /* OTHER CHANNEL VARIABLES */
+	 	U16 VIN			;
+	    U16 ACS_5V		;
+ 	    U16 ACS_12V		;
+ 	    U16 ACS_VMCU	;
+	    U16 ACS_3V3		;
+ 	    U16 ACS_FL		;
+	    U16 ACS_BL		;
+	    U16 ACS_VINL1	;
+	    U16 ACS_VINL2	;
+	    U16 ACS_BINL	;
+ 	    U16 ACS_STOP	;
+ 	    U16 ACS_RS		;
+ 	    U16 ACS_LS		;
+ 	    U16 RS_VRx		;
+	    U16 RS_VRy		;
+	    U16 LS_VRx		;
+ 	    U16 LS_VRy		;
+	    U16 DIREKSIYON	;
+	    U16 FREN		;
+	    U16 GAZ			;
+
+
 	U8 dummy[ADC_PACKEDSIZE];			//@INFO: 256 Byte
 }adc_st;
 

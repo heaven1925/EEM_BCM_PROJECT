@@ -44,7 +44,7 @@
  void ModuleADC_StartUP(void);
  void ModuleADC_MAIN(void);
 	
-	
+ U32 Process_AnalogSignals_ReadChannel(U8 MUX_SELECT, U8 SELECT_PIN);
 	
 	
 #endif /*__ADC_MODULE_PRIVATE_H__ */	
