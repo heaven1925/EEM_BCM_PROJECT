@@ -1,0 +1,6 @@
+../features/ModuleCONTROL/Src/ModuleCONTROL.c:30:6:ModuleCONTROL_HWInit	4	static
+../features/ModuleCONTROL/Src/ModuleCONTROL.c:42:6:ModuleCONTROL_SWInit	4	static
+../features/ModuleCONTROL/Src/ModuleCONTROL.c:54:6:ModuleCONTROL_StartUP	8	static
+../features/ModuleCONTROL/Src/ModuleCONTROL.c:80:6:ModuleCONTROL_MAIN_Routine	4	static
+../features/ModuleCONTROL/Src/ModuleCONTROL.c:92:6:ModuleCONTROL_MAIN_Process	4	static
+../features/ModuleCONTROL/Src/ModuleCONTROL.c:105:6:ModuleCONTROL_MAIN	8	static

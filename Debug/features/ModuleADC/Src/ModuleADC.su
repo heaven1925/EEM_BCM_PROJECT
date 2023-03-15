@@ -1,0 +1,6 @@
+../features/ModuleADC/Src/ModuleADC.c:30:6:ModuleADC_HWInit	4	static
+../features/ModuleADC/Src/ModuleADC.c:42:6:ModuleADC_SWInit	4	static
+../features/ModuleADC/Src/ModuleADC.c:54:6:ModuleADC_StartUP	8	static
+../features/ModuleADC/Src/ModuleADC.c:80:6:ModuleADC_MAIN_Routine	4	static
+../features/ModuleADC/Src/ModuleADC.c:92:6:ModuleADC_MAIN_Process	4	static
+../features/ModuleADC/Src/ModuleADC.c:105:6:ModuleADC_MAIN	8	static

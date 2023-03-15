@@ -1,0 +1,6 @@
+../features/BodyControlMAIN/Src/BodyControlMAIN.c:33:6:BodyControlMAIN_HWInit	4	static
+../features/BodyControlMAIN/Src/BodyControlMAIN.c:45:6:BodyControlMAIN_SWInit	4	static
+../features/BodyControlMAIN/Src/BodyControlMAIN.c:57:6:BodyControlMAIN_StartUP	8	static
+../features/BodyControlMAIN/Src/BodyControlMAIN.c:83:6:BodyControlMAIN_Routine	8	static
+../features/BodyControlMAIN/Src/BodyControlMAIN.c:102:6:BodyControlMAIN_Process	4	static
+../features/BodyControlMAIN/Src/BodyControlMAIN.c:115:6:BodyControlMAIN	8	static

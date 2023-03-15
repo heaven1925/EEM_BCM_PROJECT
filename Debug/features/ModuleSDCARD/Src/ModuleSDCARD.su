@@ -1,0 +1,6 @@
+../features/ModuleSDCARD/Src/ModuleSDCARD.c:30:6:ModuleSDCARD_HWInit	4	static
+../features/ModuleSDCARD/Src/ModuleSDCARD.c:42:6:ModuleSDCARD_SWInit	4	static
+../features/ModuleSDCARD/Src/ModuleSDCARD.c:54:6:ModuleSDCARD_StartUP	8	static
+../features/ModuleSDCARD/Src/ModuleSDCARD.c:80:6:ModuleSDCARD_MAIN_Routine	4	static
+../features/ModuleSDCARD/Src/ModuleSDCARD.c:92:6:ModuleSDCARD_MAIN_Process	4	static
+../features/ModuleSDCARD/Src/ModuleSDCARD.c:105:6:ModuleSDCARD_MAIN	8	static

@@ -1,0 +1,6 @@
+../features/ModuleTELEMETRY/Src/ModuleTELEMETRY.c:30:6:ModuleTELEMETRY_HWInit	4	static
+../features/ModuleTELEMETRY/Src/ModuleTELEMETRY.c:42:6:ModuleTELEMETRY_SWInit	4	static
+../features/ModuleTELEMETRY/Src/ModuleTELEMETRY.c:54:6:ModuleTELEMETRY_StartUP	8	static
+../features/ModuleTELEMETRY/Src/ModuleTELEMETRY.c:80:6:ModuleTELEMETRY_MAIN_Routine	4	static
+../features/ModuleTELEMETRY/Src/ModuleTELEMETRY.c:92:6:ModuleTELEMETRY_MAIN_Process	4	static
+../features/ModuleTELEMETRY/Src/ModuleTELEMETRY.c:105:6:ModuleTELEMETRY_MAIN	8	static

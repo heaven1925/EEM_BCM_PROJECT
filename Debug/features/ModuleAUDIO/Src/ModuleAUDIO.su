@@ -1,0 +1,6 @@
+../features/ModuleAUDIO/Src/ModuleAUDIO.c:30:6:ModuleAUDIO_HWInit	4	static
+../features/ModuleAUDIO/Src/ModuleAUDIO.c:42:6:ModuleAUDIO_SWInit	4	static
+../features/ModuleAUDIO/Src/ModuleAUDIO.c:54:6:ModuleAUDIO_StartUP	8	static
+../features/ModuleAUDIO/Src/ModuleAUDIO.c:80:6:ModuleAUDIO_MAIN_Routine	4	static
+../features/ModuleAUDIO/Src/ModuleAUDIO.c:92:6:ModuleAUDIO_MAIN_Process	4	static
+../features/ModuleAUDIO/Src/ModuleAUDIO.c:105:6:ModuleAUDIO_MAIN	8	static
