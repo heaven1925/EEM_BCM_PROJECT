@@ -227,7 +227,7 @@ void EXTI4_IRQHandler(void)
 /**
   * @brief This function handles CAN1 TX interrupt.
   */
-__WEAK void CAN1_TX_IRQHandler(void)
+void CAN1_TX_IRQHandler(void)
 {
   /* USER CODE BEGIN CAN1_TX_IRQn 0 */
 
@@ -269,7 +269,7 @@ __WEAK void CAN1_RX1_IRQHandler(void)
 /**
   * @brief This function handles CAN1 SCE interrupt.
   */
-__WEAK void CAN1_SCE_IRQHandler(void)
+void CAN1_SCE_IRQHandler(void)
 {
   /* USER CODE BEGIN CAN1_SCE_IRQn 0 */
 
