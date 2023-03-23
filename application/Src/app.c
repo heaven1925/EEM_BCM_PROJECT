@@ -138,7 +138,7 @@ void APP_periodicTimerIRQHandler(void* param)
 
 	static U8 adcSequance;
 
-	adcSequance = __GL.can.msgTickCounter_u32 % 6 ;
+	adcSequance = __GL.can.msgTickCounter_u32 % 10 ;
 	if( adcSequance == 0 )
 	{
 		__GL.mainState.flag.adc = TRUE;
@@ -147,6 +147,10 @@ void APP_periodicTimerIRQHandler(void* param)
 	{
 		__GL.mainState.flag.adc = FALSE;
 	}
+
+
+
+
 
 }
 
@@ -456,27 +460,27 @@ void Initilialise_App(void)
     /*
     * Broadcast02 - Start for Message 04
     */
-    osTimerStart(xTimerID.broadcast02 , pdMS_TO_TICKS(200));
+    osTimerStart(xTimerID.broadcast02 , pdMS_TO_TICKS(100));
 
     /*
     * Broadcast03 - Start for Message 05
     */
-    osTimerStart(xTimerID.broadcast03 , pdMS_TO_TICKS(300));
+    osTimerStart(xTimerID.broadcast03 , pdMS_TO_TICKS(100));
 
     /*
      * Broadcast04 - Start for Message 11
      */
-    osTimerStart(xTimerID.broadcast01 , pdMS_TO_TICKS(400));
+    osTimerStart(xTimerID.broadcast04 , pdMS_TO_TICKS(100));
 
     /*
     * Broadcast05 - Start for Message 12
     */
-    osTimerStart(xTimerID.broadcast05 , pdMS_TO_TICKS(500));
+    osTimerStart(xTimerID.broadcast05 , pdMS_TO_TICKS(100));
 
     /*
     * Broadcast06 - Start for Message 19
     */
-    osTimerStart(xTimerID.broadcast06 , pdMS_TO_TICKS(600));
+    osTimerStart(xTimerID.broadcast06 , pdMS_TO_TICKS(100));
 
     /*
     * Broadcast07 - Start for Message 20
@@ -509,6 +513,10 @@ void Initilialise_App(void)
 ********************************************************************************/
 void MAIN_App(void)
 {
+
+	//@NOTICE: @DEL: Flash sekansları eklendigi zaman silinecektir.
+	memset( &__GL , 0x00 , sizeof(__GL) );
+
 	/* Create Threads, Semph, SW Timers */
     Initilialise_App();
     /* Start Scheduler */
@@ -547,7 +555,7 @@ void Process_BodyControlMAIN_TaskHandler(void* param)
 
         BodyControlMAIN(); /* Main Application */
 
-//        vTaskDelay( pdMS_TO_TICKS(10) );
+        vTaskDelay( pdMS_TO_TICKS(10) );
 
 //        Process_AUDIO_Run();
 //        Process_CONTROL_Run();

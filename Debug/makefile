@@ -76,8 +76,8 @@ all: main-build
 main-build: EGE_AKSV2_2023.elf secondary-outputs
 
 # Tool invocations
-EGE_AKSV2_2023.elf EGE_AKSV2_2023.map: $(OBJS) $(USER_OBJS) C:\Users\Lenovo\STM32CubeIDE\workspace_1.10.1\EGE_AKSV2_2023\STM32F446ZETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "EGE_AKSV2_2023.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\Lenovo\STM32CubeIDE\workspace_1.10.1\EGE_AKSV2_2023\STM32F446ZETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="EGE_AKSV2_2023.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+EGE_AKSV2_2023.elf EGE_AKSV2_2023.map: $(OBJS) $(USER_OBJS) C:\Users\AtakanErtekin\Desktop\Elektromobil\ WorkSpace\EEM_BCM_PROJECT\STM32F446ZETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "EGE_AKSV2_2023.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\AtakanErtekin\Desktop\Elektromobil WorkSpace\EEM_BCM_PROJECT\STM32F446ZETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="EGE_AKSV2_2023.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

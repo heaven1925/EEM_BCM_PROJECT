@@ -30,9 +30,9 @@
 
 /*********************** DEFINES ***********************************************/
 
+/* Main Class Create */
+Adc_Type adcModule = {0};
 
-	
-	
 /********************** FUNCTION PROTOTYPE **************************************/	
 	
  void ModuleADC_HWInit(void);
@@ -40,12 +40,20 @@
  void ModuleADC_MAIN_Process(void);
  void ModuleADC_MAIN_Routine(void);
 
- //@INFO: Public function, private decleration
+ //@INFO: Private Function Decleration
  void ModuleADC_StartUP(void);
  void ModuleADC_MAIN(void);
-	
+
+ void ModuleADC_CTOR(Adc_Type* param , adc_st* _obj );
+
  U32 Process_AnalogSignals_ReadChannel(U8 MUX_SELECT, U8 SELECT_PIN);
-	
+
+ //@INFO: Public Function Decleration
+ U16 getWheelAngle(adc_st* analogHandle);
+ U16 getBrakeParam(adc_st* analogHandle);
+ U16 getGasParam(adc_st* analogHandle);
+
+ void setMotorSpeed1( BCM_Module_st* BCM_MS1_SpeedHandle , adc_st* analogHandle);
 	
 #endif /*__ADC_MODULE_PRIVATE_H__ */	
 

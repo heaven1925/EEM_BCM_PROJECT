@@ -20,6 +20,19 @@
 
 BodyControlMAIN_State_et BodyControlMAIN_State = BodyControlMAIN_State_IDLE;
 
+extern  BCM_Module_st	BCM_MSG;
+extern  HVAC_Module_st	HVAC_MSG;
+extern  SCB_Module_st	SCB_MSG;
+extern  BMS_Module_st	BMS_MSG;
+extern  MS1_Module_st	MS1_MSG;
+extern  MS2_Module_st	MS2_MSG;
+extern  ISO_Module_st	ISO_MSG;
+extern  TLM_Module_st	TLM_MSG;
+extern  YSB_Module_st	YSB_MSG;
+
+#define TEST_CAN
+
+
 
 #if 1	/* Init Functions */
 
@@ -44,7 +57,7 @@ void BodyControlMAIN_HWInit(void)
 ********************************************************************************/
 void BodyControlMAIN_SWInit(void)
 {
-	
+
 }
 
 /*******************************************************************************
@@ -89,6 +102,14 @@ void BodyControlMAIN_Routine(void)
 		Process_ADC_Run();
 		__GL.mainState.flag.adc = FALSE;
 	}
+	else
+	{
+		adcModule.ops.setMotorSpeed1( &BCM_MSG, adcModule.obj );
+	}
+
+
+
+
 
 }
 

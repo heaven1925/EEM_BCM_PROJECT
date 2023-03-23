@@ -18,9 +18,88 @@
 ModuleADC_MAIN_State_et ModuleADC_MAIN_State = ModuleADC_MAIN_State_IDLE;
 ModuleADC_MAIN_State_et ModuleADC_PROCESS_State = ModuleADC_MAIN_State_IDLE;
 
-adc_st adc_s = {0};
+#define TEST_ADC_V1
+
+#if 1 /* Get Values From Measurement Class */
+
+/*******************************************************************************
+	 @func    :
+	 @param   :
+	 @return  :
+	 @date	  :
+	 @INFO		:
+********************************************************************************/
+U16 getWheelAngle(adc_st* analogHandle)
+{
+	return analogHandle->WheelAngle;
+}
+
+/*******************************************************************************
+	 @func    :
+	 @param   :
+	 @return  :
+	 @date	  :
+	 @INFO		:
+********************************************************************************/
+U16 getBrakeParam(adc_st* analogHandle)
+{
+	return analogHandle->Brake;
+}
+
+/*******************************************************************************
+	 @func    :
+	 @param   :
+	 @return  :
+	 @date	  :
+	 @INFO		:
+********************************************************************************/
+U16 getGasParam(adc_st* analogHandle)
+{
+	return analogHandle->Gas;
+}
+
+/*******************************************************************************
+	 @func    :
+	 @param   :
+	 @return  :
+	 @date	  :
+	 @INFO		:
+********************************************************************************/
+void setMotorSpeed1( BCM_Module_st* BCM_MS1_SpeedHandle , adc_st* analogHandle)
+{
+#ifdef TEST_ADC_V1
+	BCM_MS1_SpeedHandle->Message11.SPN.BCM_MS1_Speed = analogHandle->WheelAngle ;
+#else
+	BCM_MS1_SpeedHandle->Message11.SPN.BCM_MS1_Speed = (uint16_t)( getGasParam(analogHandle) - getBrakeParam(analogHandle) );
+#endif
+}
+
+
+#endif
 
 #if 1	/* Init Functions */
+
+/*******************************************************************************
+	 @func    :
+	 @param   :
+	 @return  :
+	 @date	  :
+	 @INFO		:
+********************************************************************************/
+void ModuleADC_CTOR(Adc_Type* param , adc_st* _obj )
+{
+	static AdcOps_Type Vtable =
+	{
+			getWheelAngle,
+			getBrakeParam,
+			getGasParam,
+			setMotorSpeed1
+	};
+	param->ops = Vtable;
+
+	param->obj = _obj;
+}
+
 
 /*******************************************************************************
 	 @func    :	
@@ -43,7 +122,7 @@ void ModuleADC_HWInit(void)
 ********************************************************************************/
 void ModuleADC_SWInit(void)
 {
-	
+	ModuleADC_CTOR(&adcModule , &__GL.adc );
 }
 
 /*******************************************************************************
@@ -86,47 +165,47 @@ void ModuleADC_MAIN_Routine(void)
     /* MUX1 POLLING READ */
     // [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
     /* Read FBR_VS1 data from Mux1-Pin0 polling mode */
-    adc_s.VOLTAGE_3V3 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX1,
+    __GL.adc.VOLTAGE_3V3 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX1,
                                                                  PROCESS_ANALOGSIGNALS_SELECT_PIN0);
     /* Read FBL_IS1 data from Mux1-Pin1 polling mode */
-    adc_s.VOLTAGE_VMCU = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX1,
+    __GL.adc.VOLTAGE_VMCU = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX1,
                                                                  PROCESS_ANALOGSIGNALS_SELECT_PIN1);
     /* Read FBL_VS1 data from Mux1-Pin2 polling mode */
-    adc_s.VOLTAGE_5V = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX1,
+    __GL.adc.VOLTAGE_5V = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX1,
                                                                  PROCESS_ANALOGSIGNALS_SELECT_PIN2);
     /* Read FBR_IS1 data from Mux1-Pin3 polling mode */
-    adc_s.VOLTAGE_12V = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX1,
+    __GL.adc.VOLTAGE_12V = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX1,
                                                                  PROCESS_ANALOGSIGNALS_SELECT_PIN3);
     /* Read FBL_VS2 data from Mux1-Pin4 polling mode */
-    adc_s.VOLTAGE_24V = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX1,
+    __GL.adc.VOLTAGE_24V = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX1,
                                                                  PROCESS_ANALOGSIGNALS_SELECT_PIN4);
     // ]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
     /* MUX2 POLLING READ */
     // [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
     /* Read POUT_IS7 data from Mux2-Pin0 polling mode */
-    adc_s.A0_IN0 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX2,
+    __GL.adc.A0_IN0 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX2,
                                                              PROCESS_ANALOGSIGNALS_SELECT_PIN0);
     /* Read POUT_VS4 data from Mux2-Pin1 polling mode */
-    adc_s.A0_IN1 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX2,
+    __GL.adc.A0_IN1 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX2,
                                                              PROCESS_ANALOGSIGNALS_SELECT_PIN1);
     /* Read POUT_IS4 data from Mux2-Pin2 polling mode */
-    adc_s.A0_IN2 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX2,
+    __GL.adc.A0_IN2 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX2,
                                                              PROCESS_ANALOGSIGNALS_SELECT_PIN2);
     /* Read POUT_VS7 data from Mux2-Pin3 polling mode */
-    adc_s.A0_IN3 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX2,
+    __GL.adc.A0_IN3 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX2,
                                                              PROCESS_ANALOGSIGNALS_SELECT_PIN3);
     /* Read POUT_IS1 data from Mux2-Pin4 polling mode */
-    adc_s.A0_IN4 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX2,
+    __GL.adc.A0_IN4 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX2,
                                                                 PROCESS_ANALOGSIGNALS_SELECT_PIN4);
     /* Read PVDD_SNSS data from Mux2-Pin5 polling mode */
-    adc_s.A0_IN5 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX2,
+    __GL.adc.A0_IN5 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX2,
                                                                 PROCESS_ANALOGSIGNALS_SELECT_PIN5);
     /* Read POUT_VS1 data from Mux2-Pin6 polling mode */
-    adc_s.A0_IN6 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX2,
+    __GL.adc.A0_IN6 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX2,
                                                                 PROCESS_ANALOGSIGNALS_SELECT_PIN6);
     /* Read V12_SNS data from Mux2-Pin7 polling mode */
-    adc_s.A0_IN7 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX2,
+    __GL.adc.A0_IN7 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_MUX2,
                                                                 PROCESS_ANALOGSIGNALS_SELECT_PIN7);
     // ]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
@@ -135,64 +214,64 @@ void ModuleADC_MAIN_Routine(void)
     /*  OTHER CHANNEL POLLING READ */
     // [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
     /* Read POUT_IS11 data from Mux5-Pin0 polling mode */
-    adc_s.VIN = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_VIN,
+    __GL.adc.VIN = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_VIN,
     															   PROCESS_ANALOGSIGNALS_SELECT_NULL);
     /* Read POUT_VS8 data from Mux5-Pin1 polling mode */
-    adc_s.ACS_5V = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_5V,
+    __GL.adc.ACS_5V = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_5V,
     																PROCESS_ANALOGSIGNALS_SELECT_NULL);
     /* Read POUT_IS8 data from Mux5-Pin2 polling mode */
-    adc_s.ACS_12V = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_12V,
+    __GL.adc.ACS_12V = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_12V,
    															 PROCESS_ANALOGSIGNALS_SELECT_NULL);
     /* Read POUT_VS8 data from Mux5-Pin1 polling mode */
-    adc_s.ACS_VMCU = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_VMCU,
+    __GL.adc.ACS_VMCU = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_VMCU,
     																PROCESS_ANALOGSIGNALS_SELECT_NULL);
     /* Read POUT_IS8 data from Mux5-Pin2 polling mode */
-    adc_s.ACS_3V3 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_3V3,
+    __GL.adc.ACS_3V3 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_3V3,
    															 PROCESS_ANALOGSIGNALS_SELECT_NULL);
     /* Read POUT_VS8 data from Mux5-Pin1 polling mode */
-    adc_s.ACS_FL = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_FL,
+    __GL.adc.ACS_FL = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_FL,
     																PROCESS_ANALOGSIGNALS_SELECT_NULL);
     /* Read POUT_IS8 data from Mux5-Pin2 polling mode */
-    adc_s.ACS_BL = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_BL,
+    __GL.adc.ACS_BL = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_BL,
    															 PROCESS_ANALOGSIGNALS_SELECT_NULL);
     /* Read POUT_VS8 data from Mux5-Pin1 polling mode */
-    adc_s.ACS_VINL1 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_VINL1,
+    __GL.adc.ACS_VINL1 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_VINL1,
     																PROCESS_ANALOGSIGNALS_SELECT_NULL);
     /* Read POUT_IS8 data from Mux5-Pin2 polling mode */
-    adc_s.ACS_VINL2 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_VINL2,
+    __GL.adc.ACS_VINL2 = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_VINL2,
    															 PROCESS_ANALOGSIGNALS_SELECT_NULL);
     /* Read POUT_VS8 data from Mux5-Pin1 polling mode */
-    adc_s.ACS_BINL = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_BINL,
+    __GL.adc.ACS_BINL = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_BINL,
     															PROCESS_ANALOGSIGNALS_SELECT_NULL);
     /* Read POUT_IS8 data from Mux5-Pin2 polling mode */
-    adc_s.ACS_STOP = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_STOP,
+    __GL.adc.ACS_STOP = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_STOP,
    															 PROCESS_ANALOGSIGNALS_SELECT_NULL);
     /* Read POUT_VS8 data from Mux5-Pin1 polling mode */
-    adc_s.ACS_RS = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_RS,
+    __GL.adc.ACS_RS = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_RS,
     																PROCESS_ANALOGSIGNALS_SELECT_NULL);
     /* Read POUT_IS8 data from Mux5-Pin2 polling mode */
-    adc_s.ACS_LS = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_LS,
+    __GL.adc.ACS_LS = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_ACS_LS,
    															 PROCESS_ANALOGSIGNALS_SELECT_NULL);
     /* Read POUT_VS8 data from Mux5-Pin1 polling mode */
-    adc_s.RS_VRx = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_RS_VRx,
+    __GL.adc.RS_VRx = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_RS_VRx,
     																PROCESS_ANALOGSIGNALS_SELECT_NULL);
     /* Read POUT_IS8 data from Mux5-Pin2 polling mode */
-    adc_s.RS_VRy = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_RS_VRy,
+    __GL.adc.RS_VRy = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_RS_VRy,
    															 PROCESS_ANALOGSIGNALS_SELECT_NULL);
     /* Read POUT_VS8 data from Mux5-Pin1 polling mode */
-    adc_s.LS_VRx = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_LS_VRx,
+    __GL.adc.LS_VRx = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_LS_VRx,
     																PROCESS_ANALOGSIGNALS_SELECT_NULL);
     /* Read POUT_IS8 data from Mux5-Pin2 polling mode */
-    adc_s.LS_VRy = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_LS_VRy,
+    __GL.adc.LS_VRy = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_LS_VRy,
    															 PROCESS_ANALOGSIGNALS_SELECT_NULL);
     /* Read POUT_VS8 data from Mux5-Pin1 polling mode */
-    adc_s.DIREKSIYON = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_DIREKSIYON,
+    __GL.adc.WheelAngle = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_WHEELANGLE,
     																PROCESS_ANALOGSIGNALS_SELECT_NULL);
     /* Read POUT_IS8 data from Mux5-Pin2 polling mode */
-    adc_s.FREN = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_FREN,
+    __GL.adc.Brake = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_BRAKE,
    															 PROCESS_ANALOGSIGNALS_SELECT_NULL);
     /* Read POUT_VS8 data from Mux5-Pin1 polling mode */
-    adc_s.GAZ = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_GAZ,
+    __GL.adc.Gas = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_GAS,
     																PROCESS_ANALOGSIGNALS_SELECT_NULL);
      // ]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]]
 
@@ -486,7 +565,7 @@ U32 Process_AnalogSignals_ReadChannel(U8 MUX_SELECT, U8 SELECT_PIN)
 
                      break;
 
-        case PROCESS_ANALOGSIGNALS_AN_DIREKSIYON:
+        case PROCESS_ANALOGSIGNALS_AN_WHEELANGLE:
 
                      Process_AnalogSignals_SeperateChannels(&PROCESS_ANALOGSIGNALS_AN_DIREKSIYON_HANDLE,
                         								PROCESS_ANALOGSIGNALS_AN_DIREKSIYON_CHANNEL,
@@ -496,7 +575,7 @@ U32 Process_AnalogSignals_ReadChannel(U8 MUX_SELECT, U8 SELECT_PIN)
 
                      break;
 
-        case PROCESS_ANALOGSIGNALS_AN_FREN:
+        case PROCESS_ANALOGSIGNALS_AN_BRAKE:
 
                      Process_AnalogSignals_SeperateChannels(&PROCESS_ANALOGSIGNALS_AN_FREN_HANDLE,
                         								PROCESS_ANALOGSIGNALS_AN_FREN_CHANNEL,
@@ -506,7 +585,7 @@ U32 Process_AnalogSignals_ReadChannel(U8 MUX_SELECT, U8 SELECT_PIN)
 
                      break;
 
-        case PROCESS_ANALOGSIGNALS_AN_GAZ:
+        case PROCESS_ANALOGSIGNALS_AN_GAS:
 
                      Process_AnalogSignals_SeperateChannels(&PROCESS_ANALOGSIGNALS_AN_GAZ_HANDLE,
                         								PROCESS_ANALOGSIGNALS_AN_GAZ_CHANNEL,

@@ -15,23 +15,28 @@
 	
 /*********************** INCLUDES **********************************************/
 
-#include "ModuleCAN_definition.h"
-
+#include "ModuleADC_definition.h"
 
 /*********************** DEFINES ***********************************************/
- extern void ModuleADC_StartUP(void);
- extern void ModuleADC_MAIN(void);
 
-	
-	
+
+/*********************** VARIABLE PROTOTYPE *************************************/
+extern Adc_Type adcModule;
+
+
 /********************** FUNCTION PROTOTYPE **************************************/	
 	
- extern void Process_AnalogSignals_SeperateChannels(ADC_HandleTypeDef *hadc, U32 ADC_CHANNEL, U32 RANK);
- extern U32  Process_AnalogSignals_ReadChannel(U8 MUX_SELECT, U8 SELECT_PIN);
- extern void Process_AnalogSignals_GetAnalogSignals(void);
 
- extern adc_st adc_s;
-	
+//@INFO: extern public functions
+extern void ModuleADC_StartUP(void);
+extern void ModuleADC_MAIN(void);
+
+ extern U16 getWheelAngle(adc_st* analogHandle);
+ extern U16 getBrakeParam(adc_st* analogHandle);
+ extern U16 getGasParam(adc_st* analogHandle);
+
+ extern void setMotorSpeed1( BCM_Module_st* BCM_MS1_SpeedHandle , adc_st* analogHandle);
+
 	
 	
 #endif /*__ADC_MODULE_PUBLIC_H__ */	

@@ -76,13 +76,13 @@
 #define EEM_REVISION               0L              /**< revise version number*/
 
 /********************** EEMProtocol basic data type definitions *************/
-typedef signed   char              EEM_I8       ; /**<  8bit integer type */
-typedef signed   short             EEM_I16      ; /**< 16bit integer type */
-typedef signed   int               EEM_I32      ; /**< 32bit integer type */
-typedef unsigned char              EEM_U8       ; /**<  8bit unsigned integer type */
-typedef unsigned short             EEM_U16      ; /**< 16bit unsigned integer type */
-typedef unsigned int               EEM_U32      ; /**< 32bit unsigned integer type */
-typedef unsigned long long		   EEM_U64		; /**< 64bit unsigned integer type */
+typedef int8_t              		EEM_I8       ; /**<  8bit integer type */
+typedef int16_t             		EEM_I16      ; /**< 16bit integer type */
+typedef int32_t              		EEM_I32      ; /**< 32bit integer type */
+typedef uint8_t             	   	EEM_U8       ; /**<  8bit unsigned integer type */
+typedef uint16_t              		EEM_U16      ; /**< 16bit unsigned integer type */
+typedef uint32_t              		EEM_U32      ; /**< 32bit unsigned integer type */
+typedef uint64_t		   		   	EEM_U64		; /**< 64bit unsigned integer type */
 
 #define	EEM_VOID				   (void)
 

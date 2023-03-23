@@ -267,9 +267,9 @@ typedef enum
 typedef struct
 {
 	EEM_U32 Message01_ID;
-	union{
+	union __PACKED{
 		EEM_U8 payload[8];
-		struct{
+		struct __PACKED{
 			EEM_BOOL_T 	HVAC_led01_u1           : 1 ; /* YAKS Donanımına bağlı araç içerisindeki led-01 durumu */
 			EEM_BOOL_T 	HVAC_led02_u1           : 1 ; /* YAKS Donanımına bağlı araç içerisindeki led-02 durumu */
 			EEM_BOOL_T 	HVAC_led03_u1           : 1 ; /* YAKS Donanımına bağlı araç içerisindeki led-03 durumu */
@@ -296,9 +296,9 @@ typedef struct
 	}Message01;
 
 	EEM_U32 Message02_ID;
-	union{
+	union __PACKED{
 		EEM_U8 payload[8];
-		struct{
+		struct __PACKED{
 			EEM_U8 HVAC_tempVal_u8            : 8 ; /* Araç Kontrol Görev Birimi ( AKS-YAKS-RPI) Sıcaklık analog 8bit değeri	*/
 			EEM_U8 HVAC_humidityVal_u8		  : 8 ; /* Araç Kontrol Görev Birimi ( AKS-YAKS-RPI) Nem analog 8bit değeri					*/
 			EEM_U8 HVAC_smokeVal_u4			  : 4 ; /* Duman Sensörünün analog  4bit degeri					*/
@@ -328,20 +328,20 @@ typedef struct
 /*
  * BCM Message Class
  */
-typedef struct
+typedef struct __PACKED
 {
 	EEM_U32	Message03_ID;
-	union{
+	union __PACKED{
 		EEM_U8 payload[8];
-		struct{
+		struct __PACKED{
 			EEM_U32 BCM_differantialSpeed_u64 ; /* Diferansiyel gerçekleştirilmiş hız bilgisi */
 		}SPN;
 	}Message03;
 
 	EEM_U32	Message04_ID;
-	union{
+	union __PACKED{
 		EEM_U8 payload[8];
-		struct{
+		struct __PACKED{
 			EEM_BOOL_T	BCM_SCB_startRecord_u1 		 : 1    ;  /* Kamera kaydını başlatacak biti tutar.	*/
 			EEM_BOOL_T	BCM_SCB_stopRecord_u1		 : 1	;  /* Kamera kaydını durduracak biti tutar.	*/
 			EEM_BOOL_T	BCM_SCB_deleteRecord_u1      : 1	;  /* Kamera kaydını iptal edecek biti tutar.	*/
@@ -370,10 +370,10 @@ typedef struct
 	}Message04;
 
 	EEM_U32 Message05_ID;
-	union{
+	union __PACKED{
 
 			EEM_U8 payload[8];
-			struct{
+			struct __PACKED{
 				EEM_U16 BCM_leftGyro_u16  	: 16  ; /* Sol motorun gyro bilgisini  tutar.					 */
 				EEM_U16 BCM_leftAcc_u16  	: 16  ; /* Sol motorun ivme bilgisini tutar.					 */
 				EEM_U16 BCM_rightGyro_u16   : 16  ; /* Sağ motorun gyro bilgisini  tutar. 					 */
@@ -382,34 +382,34 @@ typedef struct
 		}Message05;
 
 	EEM_U32 Message11_ID;
-	union{
+	union __PACKED{
 		EEM_U8 payload[8];
-		struct{
-			EEM_U64 BCM_MS1_Speed     	: 64  ; /*  */
+		struct __PACKED{
+			EEM_U16 BCM_MS1_Speed     	; /*  */
 		}SPN;
 	}Message11;
 
 	EEM_U32 Message12_ID;
-	union{
+	union __PACKED{
 		EEM_U8 payload[8];
-		struct{
+		struct __PACKED{
 			EEM_U64 BCM_MS2_Speed     	 : 64  ; /*  */
 		}SPN;
 	}Message12;
 
 	EEM_U32 Message19_ID;
-	union{
+	union __PACKED{
 		EEM_U8 payload[8];
-		struct{
+		struct __PACKED{
 			EEM_U8  BCM_MS1_Mode	:8;
 			EEM_U64 dummy :56;
 		}SPN;
 	}Message19;
 
 	EEM_U32 Message20_ID;
-	union{
+	union __PACKED{
 		EEM_U8 payload[8];
-		struct{
+		struct __PACKED{
 			EEM_U8 BCM_MS2_Mode: 8	 ;
 			EEM_U64 dummy : 56;
 			}SPN;
@@ -424,9 +424,9 @@ typedef struct
 typedef struct
 {
 	EEM_U32	Message21_ID;
-	union{
+	union __PACKED{
 		EEM_U8 payload[8];
-		struct{
+		struct __PACKED{
 			EEM_BOOL_T 	SCB_cameraStartACK_u1 			: 1 ;
 			EEM_BOOL_T	SCB_cameraStartNACK_u1			: 1 ;
 			EEM_BOOL_T	SCB_cameraStopACK_u1			: 1 ;
@@ -452,9 +452,9 @@ typedef struct
 typedef struct
 {
 	EEM_U32 Message06_ID;
-	union{
+	union __PACKED{
 		EEM_U8 payload[8];
-		struct{
+		struct __PACKED{
 			EEM_U16 BMS_cell01Voltage_u16  	: 16  ; /* Batarya Grubu 1. Hücre Gerilimini tutar.	 */
 			EEM_U16 BMS_cell02Voltage_u16  	: 16  ; /* Batarya Grubu 2. Hücre Gerilimini tutar.  */
 			EEM_U16 BMS_cell03Voltage_u16   : 16  ; /* Batarya Grubu 3. Hücre Gerilimini tutar.  */
@@ -463,9 +463,9 @@ typedef struct
 	}Message06;
 
 	EEM_U32 Message07_ID;
-	union{
+	union __PACKED{
 		EEM_U8 payload[8];
-		struct{
+		struct __PACKED{
 			EEM_U16 BMS_cell05Voltage_u16  	: 16  ; /* Batarya Grubu 5. Hücre Gerilimini tutar.	 */
 			EEM_U16 BMS_cell06Voltage_u16  	: 16  ; /* Batarya Grubu 6. Hücre Gerilimini tutar.  */
 			EEM_U16 BMS_cell07Voltage_u16   : 16  ; /* Batarya Grubu 7. Hücre Gerilimini tutar.  */
@@ -474,9 +474,9 @@ typedef struct
 	}Message07;
 
 	EEM_U32 Message08_ID;
-	union{
+	union __PACKED{
 		EEM_U8 payload[8];
-		struct{
+		struct __PACKED{
 			EEM_U16 BMS_cell09Voltage_u16  	: 16  ; /* Batarya Grubu 9. Hücre Gerilimini tutar.	 */
 			EEM_U16 BMS_cell10Voltage_u16  	: 16  ; /* Batarya Grubu 10. Hücre Gerilimini tutar. */
 			EEM_U16 BMS_cell11Voltage_u16   : 16  ; /* Batarya Grubu 11. Hücre Gerilimini tutar. */
@@ -485,9 +485,9 @@ typedef struct
 	}Message08;
 
 	EEM_U32 Message09_ID;
-	union{
+	union __PACKED{
 		EEM_U8 payload[8];
-		struct{
+		struct __PACKED{
 			EEM_U16 BMS_cell13Voltage_u16  	: 16  ; /* Batarya Grubu 11. Hücre Gerilimini tutar.	*/
 			EEM_U16 BMS_cell14Voltage_u16  	: 16  ; /* Batarya Grubu 12. Hücre Gerilimini tutar. 	*/
 			EEM_U16 BMS_cell15Voltage_u16   : 16  ; /* Batarya Grubu 13. Hücre Gerilimini tutar. 	*/
@@ -496,9 +496,9 @@ typedef struct
 	}Message09;
 
 	EEM_U32 Message10_ID;
-	union{
+	union __PACKED{
 		EEM_U8 payload[8];
-		struct{
+		struct __PACKED{
 			EEM_U16 BMS_cell17Voltage_u16  	: 16  ; /* Batarya Grubu 15. Hücre Gerilimini tutar.	 */
 			EEM_U16 BMS_cell18Voltage_u16  	: 16  ; /* Batarya Grubu 16. Hücre Gerilimini tutar. 	 */
 			EEM_U16 BMS_lineCurrent_u16   	: 16  ; /* Batarya Grubu hat akımını tutar. 			 */
@@ -514,9 +514,9 @@ typedef struct
 typedef struct
 {
 	EEM_U32 Message13_ID;
-	union{
+	union __PACKED{
 		EEM_U8 payload[8];
-		struct{
+		struct __PACKED{
 			EEM_U8  MS1_Mode			: 8	 ;
 			EEM_U16 MS1_temperature		: 16 ;
 			EEM_U8  MS1_warningFlag01   : 1  ;
@@ -548,9 +548,9 @@ typedef struct
 	}Message13;
 
 	EEM_U32 Message14_ID;
-	union{
+	union __PACKED{
 		EEM_U8 payload[8];
-		struct{
+		struct __PACKED{
 			EEM_U32 MS1_voltage       	 	: 16 ; /*  */
 			EEM_U16 MS1_PhaseUCurrent       : 16 ; /*  */
 			EEM_U16 MS1_PhaseVCurrent       : 16 ;
@@ -559,9 +559,9 @@ typedef struct
 	}Message14; /* 0x07 */
 
 	EEM_U32 Message15_ID;
-	union{
+	union __PACKED{
 		EEM_U8 payload[8];
-		struct{
+		struct __PACKED{
 			EEM_U64 MS1_SpeedVal : 64 ;
 		}SPN;
 	}Message15;
@@ -575,9 +575,9 @@ typedef struct
 {
 
 	EEM_U32 Message16_ID;
-	union{
+	union __PACKED{
 		EEM_U8 payload[8];
-		struct{
+		struct __PACKED{
 			EEM_U8  MS2_Mode			: 8	 ;
 			EEM_U16 MS2_temperature		: 16 ;
 			EEM_U8  MS2_warningFlag01   : 1  ;
@@ -609,9 +609,9 @@ typedef struct
 	}Message16;
 
 	EEM_U32 Message17_ID;
-	union{
+	union __PACKED{
 		EEM_U8 payload[8];
-		struct{
+		struct __PACKED{
 			EEM_U32 MS2_voltage       	 	: 16 ; /*  */
 			EEM_U16 MS2_PhaseUCurrent       : 16 ; /*  */
 			EEM_U16 MS2_PhaseVCurrent       : 16 ;
@@ -620,9 +620,9 @@ typedef struct
 	}Message17;
 
 	EEM_U32 Message18_ID;
-	union{
+	union __PACKED{
 		EEM_U8 payload[8];
-		struct{
+		struct __PACKED{
 			EEM_U64 MS2_SpeedVal : 64 ;
 		}SPN;
 	}Message18;
@@ -643,9 +643,9 @@ typedef struct
 typedef struct
 {
 	EEM_U32	Message22_ID;
-	union{
+	union __PACKED{
 		EEM_U8 payload[8];
-		struct{
+		struct __PACKED{
 			EEM_U8 TLM_wifiStatus_u8 : 8 ;
 			EEM_U8 TLM_wifiCmd01_u8  : 8 ;
 			EEM_U8 TLM_wifiCmd02_u8  : 8 ;
@@ -658,9 +658,9 @@ typedef struct
 	}Message22;
 
 	EEM_U32	Message23_ID;
-	union{
+	union __PACKED{
 		EEM_U8 payload[8];
-		struct{
+		struct __PACKED{
 			EEM_U8 TLM_rfStatus_u8 : 8 ;
 			EEM_U8 TLM_rfCmd01_u8  : 8 ;
 			EEM_U8 TLM_rfCmd02_u8  : 8 ;

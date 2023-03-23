@@ -868,8 +868,8 @@ EEM_ERR_T 	EEM_PERIODIC( EEM_CAN_Packet_st*  param )
 
 	case MESSAGE11 :
 
-		BCM_MSG.Message11.SPN.BCM_MS1_Speed=(EEM_U16)(param->DATA[0]|
-				                             (EEM_U16)(param->DATA[1])<<8);
+		BCM_MSG.Message11.SPN.BCM_MS1_Speed = (EEM_U16)(param->DATA[0]|
+				                              (EEM_U16)(param->DATA[1])<<8);
 
 		break;
 

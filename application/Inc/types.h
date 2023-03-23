@@ -89,14 +89,13 @@ typedef union{
 // [[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[[
 
 #define		MAIN_PACKEDSIZE				0x100
-typedef struct{
+typedef struct __packed{
 	U8 dummy[MAIN_PACKEDSIZE];			//@INFO: 256 Byte
 }main_st;
 
 #define		ADC_PACKEDSIZE				0x100	-\
 /*	U16 x 33 ADC_VALUES;	*/			66
-typedef struct{
-
+typedef struct __packed{
 
 		/* MUX-1 VARIABLES */
 	    U16 VOLTAGE_3V3   ; /* A0 VARIABLE */
@@ -134,16 +133,16 @@ typedef struct{
 	    U16 RS_VRy		;
 	    U16 LS_VRx		;
  	    U16 LS_VRy		;
-	    U16 DIREKSIYON	;
-	    U16 FREN		;
-	    U16 GAZ			;
+	    U16 WheelAngle	;
+	    U16 Brake		;
+	    U16 Gas			;
 
 
 	U8 dummy[ADC_PACKEDSIZE];			//@INFO: 256 Byte
 }adc_st;
 
 #define		AUDIO_PACKEDSIZE			0x100
-typedef struct{
+typedef struct __packed{
 	U8 dummy[AUDIO_PACKEDSIZE];			//@INFO: 256 Byte
 }audio_st;
 
@@ -151,7 +150,7 @@ typedef struct{
 /*	U32	msgTickCounter_u32;	*/			4		-\
 /*	Union-Struct messsageID	*/			1
 
-typedef struct{
+typedef struct __packed{
 
 	U32	msgTickCounter_u32;
 
@@ -174,32 +173,32 @@ typedef struct{
 }can_st;
 
 #define		CONTROL_PACKEDSIZE			0x100
-typedef struct{
+typedef struct __packed{
 	U8 dummy[CONTROL_PACKEDSIZE];		//@INFO: 256 Byte
 }control_st;
 
 #define		FLASH_PACKEDSIZE			0x100
-typedef struct{
+typedef struct __packed{
 	U8 dummy[FLASH_PACKEDSIZE];			//@INFO: 256 Byte
 }flash_st;
 
 #define		POWERSWITCH_PACKEDSIZE		0x100
-typedef struct{
+typedef struct __packed{
 	U8 dummy[POWERSWITCH_PACKEDSIZE]; 	//@INFO: 256 Byte
 }powerswitch_st;
 
 #define		RTC_PACKEDSIZE				0x100
-typedef struct{
+typedef struct __packed{
 	U8 dummy[RTC_PACKEDSIZE];			//@INFO: 256 Byte
 }rtc_st;
 
 #define		SDCARD_PACKEDSIZE			0x100
-typedef struct{
+typedef struct __packed{
 	U8 dummy[SDCARD_PACKEDSIZE];		//@INFO: 256 Byte
 }sdcard_st;
 
 #define		TELEMETRY_PACKEDSIZE		0x100
-typedef struct{
+typedef struct __packed{
 	U8 dummy[TELEMETRY_PACKEDSIZE];		//@INFO: 256 Byte
 }telemetry_st;
 

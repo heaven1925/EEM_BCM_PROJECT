@@ -255,7 +255,7 @@ __WEAK void CAN1_RX0_IRQHandler(void)
 /**
   * @brief This function handles CAN1 RX1 interrupt.
   */
-__WEAK void CAN1_RX1_IRQHandler(void)
+void CAN1_RX1_IRQHandler(void)
 {
   /* USER CODE BEGIN CAN1_RX1_IRQn 0 */
 
