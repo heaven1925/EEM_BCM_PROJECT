@@ -133,7 +133,7 @@ typedef struct __packed{
 	    U16 RS_VRy		;
 	    U16 LS_VRx		;
  	    U16 LS_VRy		;
-	    U16 WheelAngle	;
+	    U16 MotorDrive  ; /*WheelAngle	; */
 	    U16 Brake		;
 	    U16 Gas			;
 

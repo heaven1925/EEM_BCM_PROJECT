@@ -31,7 +31,7 @@ ModuleADC_MAIN_State_et ModuleADC_PROCESS_State = ModuleADC_MAIN_State_IDLE;
 ********************************************************************************/
 U16 getWheelAngle(adc_st* analogHandle)
 {
-	return analogHandle->WheelAngle;
+	return analogHandle->MotorDrive; /*WheelAngle;*/
 }
 
 /*******************************************************************************
@@ -65,13 +65,150 @@ U16 getGasParam(adc_st* analogHandle)
 	 @date	  :
 	 @INFO		:
 ********************************************************************************/
-void setMotorSpeed1( BCM_Module_st* BCM_MS1_SpeedHandle , adc_st* analogHandle)
+void setMotorSpeed( BCM_Module_st* BCM_MS1_SpeedHandle , adc_st* analogHandle)
 {
 #ifdef TEST_ADC_V1
-	BCM_MS1_SpeedHandle->Message11.SPN.BCM_MS1_Speed = analogHandle->WheelAngle ;
+	BCM_MS1_SpeedHandle->Message11.SPN.BCM_MS1_Speed = calculateMotorSpeedLeft(analogHandle);
+	BCM_MS1_SpeedHandle->Message12.SPN.BCM_MS2_Speed = calculateMotorSpeedRight(analogHandle);
 #else
 	BCM_MS1_SpeedHandle->Message11.SPN.BCM_MS1_Speed = (uint16_t)( getGasParam(analogHandle) - getBrakeParam(analogHandle) );
 #endif
+}
+
+
+/*******************************************************************************
+	 @func    :
+	 @param   :
+	 @return  :
+	 @date	  :
+	 @INFO		:
+********************************************************************************/
+void setAnalogSignals( BCM_Module_st* BCM_MS1_ModeHandle , adc_st* analogHandle)
+{
+	DirectionMode_Type direction = IDLE;
+
+	direction = getMotorDirection(analogHandle);
+	switch(direction)
+	{
+	case FORWARD:
+		BCM_MS1_ModeHandle->Message19.SPN.BCM_MS1_Mode = 0x01U ;
+		BCM_MS1_ModeHandle->Message20.SPN.BCM_MS2_Mode = 0x01U ;
+	break;
+
+	case BACKWARD:
+		BCM_MS1_ModeHandle->Message19.SPN.BCM_MS1_Mode = 0x02U ;
+		BCM_MS1_ModeHandle->Message20.SPN.BCM_MS2_Mode = 0x02U ;
+	break;
+
+	default:
+		BCM_MS1_ModeHandle->Message19.SPN.BCM_MS1_Mode = 0x00U ;
+		BCM_MS1_ModeHandle->Message20.SPN.BCM_MS2_Mode = 0x00U ;
+	break;
+	}
+
+
+
+
+}
+
+/*******************************************************************************
+	 @func    :
+	 @param   :
+	 @return  :
+	 @date	  :
+	 @INFO		:
+********************************************************************************/
+EEM_U16 calculateMotorSpeedLeft(adc_st* analogHandle)
+{
+#ifdef TEST_ADC_V1
+
+	/* Convert to 0 - 4000 param */
+	if( analogHandle->MotorDrive < 0 || analogHandle->MotorDrive > 4096 )
+	{
+		return 0;
+	}
+	else if( analogHandle->MotorDrive < 200 )
+	{
+		return 0;
+	}
+	else if( analogHandle->MotorDrive > 600 )
+	{
+		return 4000;
+	}
+	else
+	{
+		/* When all conditions are okay */
+		return (EEM_U16)( (analogHandle->MotorDrive - 100 ) * ( 4000 / 1000 ) );
+	}
+
+#else
+	//@LATER: Left motor için matematiksel işlemler gelecektir.!
+#endif
+
+
+}
+
+/*******************************************************************************
+	 @func    :
+	 @param   :
+	 @return  :
+	 @date	  :
+	 @INFO		:
+********************************************************************************/
+EEM_U16 calculateMotorSpeedRight(adc_st* analogHandle)
+{
+#ifdef TEST_ADC_V1
+
+	/* Convert to 0 - 4000 param */
+	if( analogHandle->MotorDrive < 0 || analogHandle->MotorDrive > 4096 )
+	{
+		return 0;
+	}
+	else if( analogHandle->MotorDrive < 200 )
+	{
+		return 0;
+	}
+	else if( analogHandle->MotorDrive > 600 )
+	{
+		return 4000;
+	}
+	else
+	{
+		/* When all conditions are okay */
+		return (EEM_U16)( (analogHandle->MotorDrive - 100 ) * ( 4000 / 1000 ) );
+	}
+
+#else
+	//@LATER: Left motor için matematiksel işlemler gelecektir.!
+#endif
+}
+
+/*******************************************************************************
+	 @func    :
+	 @param   :
+	 @return  :
+	 @date	  :
+	 @INFO		:
+********************************************************************************/
+DirectionMode_Type getMotorDirection(adc_st* analogHandle)
+{
+	static DirectionMode_Type mode = IDLE;
+
+	/*Motor Direction Configuration */
+	if( analogHandle->RS_VRx > 3000 && mode != BACKWARD )
+	{
+		mode = FORWARD;
+	}
+	else if( analogHandle->RS_VRx < 200  && mode != FORWARD )
+	{
+		mode = BACKWARD;
+	}
+	else
+	{
+		mode = IDLE;
+	}
+
+	return mode;
 }
 
 
@@ -93,7 +230,8 @@ void ModuleADC_CTOR(Adc_Type* param , adc_st* _obj )
 			getWheelAngle,
 			getBrakeParam,
 			getGasParam,
-			setMotorSpeed1
+			setMotorSpeed,
+			setAnalogSignals
 	};
 	param->ops = Vtable;
 
@@ -265,7 +403,7 @@ void ModuleADC_MAIN_Routine(void)
     __GL.adc.LS_VRy = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_LS_VRy,
    															 PROCESS_ANALOGSIGNALS_SELECT_NULL);
     /* Read POUT_VS8 data from Mux5-Pin1 polling mode */
-    __GL.adc.WheelAngle = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_WHEELANGLE,
+    __GL.adc.MotorDrive /* WheelAngle */ = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_WHEELANGLE,
     																PROCESS_ANALOGSIGNALS_SELECT_NULL);
     /* Read POUT_IS8 data from Mux5-Pin2 polling mode */
     __GL.adc.Brake = Process_AnalogSignals_ReadChannel(PROCESS_ANALOGSIGNALS_AN_BRAKE,

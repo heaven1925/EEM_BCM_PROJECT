@@ -178,6 +178,8 @@ extern 	 void             	  MAIN_App (void);
 #define EXTI0_IGN_KEY_Pin GPIO_PIN_0
 #define EXTI0_IGN_KEY_GPIO_Port GPIOD
 #define EXTI0_IGN_KEY_EXTI_IRQn EXTI0_IRQn
+#define GPIO_SX1262_NSS_Pin GPIO_PIN_1
+#define GPIO_SX1262_NSS_GPIO_Port GPIOD
 #define DEBUG_UART5_RX_Pin GPIO_PIN_2
 #define DEBUG_UART5_RX_GPIO_Port GPIOD
 #define GPIO_Output_LED_DRIVER_RESET_Pin GPIO_PIN_7

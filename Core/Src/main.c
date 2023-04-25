@@ -148,9 +148,9 @@ int main(void)
   MX_UART4_Init();
   MX_UART5_Init();
   MX_CRC_Init();
-  //MX_IWDG_Init();
+ //MX_IWDG_Init();
   MX_RTC_Init();
-  //MX_WWDG_Init();
+ // MX_WWDG_Init();
   /* USER CODE BEGIN 2 */
 
   MAIN_App(); /* JUMP INTO BODY CONTROL MODULE */
@@ -190,7 +190,6 @@ int main(void)
 
   /* Start scheduler */
   osKernelStart();
-
   /* We should never get here as control is now taken by the scheduler */
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
@@ -276,7 +275,7 @@ static void MX_ADC1_Init(void)
   hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
   hadc1.Init.Resolution = ADC_RESOLUTION_12B;
   hadc1.Init.ScanConvMode = ENABLE;
-  hadc1.Init.ContinuousConvMode = ENABLE;
+  hadc1.Init.ContinuousConvMode = DISABLE;
   hadc1.Init.DiscontinuousConvMode = DISABLE;
   hadc1.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
   hadc1.Init.ExternalTrigConv = ADC_SOFTWARE_START;
@@ -377,7 +376,7 @@ static void MX_ADC3_Init(void)
   hadc3.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV4;
   hadc3.Init.Resolution = ADC_RESOLUTION_12B;
   hadc3.Init.ScanConvMode = ENABLE;
-  hadc3.Init.ContinuousConvMode = ENABLE;
+  hadc3.Init.ContinuousConvMode = DISABLE;
   hadc3.Init.DiscontinuousConvMode = DISABLE;
   hadc3.Init.ExternalTrigConvEdge = ADC_EXTERNALTRIGCONVEDGE_NONE;
   hadc3.Init.ExternalTrigConv = ADC_SOFTWARE_START;
@@ -804,7 +803,7 @@ static void MX_SPI2_Init(void)
   hspi2.Init.DataSize = SPI_DATASIZE_8BIT;
   hspi2.Init.CLKPolarity = SPI_POLARITY_LOW;
   hspi2.Init.CLKPhase = SPI_PHASE_1EDGE;
-  hspi2.Init.NSS = SPI_NSS_HARD_OUTPUT;
+  hspi2.Init.NSS = SPI_NSS_SOFT;
   hspi2.Init.BaudRatePrescaler = SPI_BAUDRATEPRESCALER_2;
   hspi2.Init.FirstBit = SPI_FIRSTBIT_MSB;
   hspi2.Init.TIMode = SPI_TIMODE_DISABLE;
@@ -1049,6 +1048,8 @@ static void MX_WWDG_Init(void)
 static void MX_GPIO_Init(void)
 {
   GPIO_InitTypeDef GPIO_InitStruct = {0};
+/* USER CODE BEGIN MX_GPIO_Init_1 */
+/* USER CODE END MX_GPIO_Init_1 */
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOE_CLK_ENABLE();
@@ -1077,7 +1078,7 @@ static void MX_GPIO_Init(void)
 
   /*Configure GPIO pin Output Level */
   HAL_GPIO_WritePin(GPIOD, GPIO_Output_M1_S2_Pin|GPIO_Output_M1_S1_Pin|GPIO_Output_M1_S0_Pin|GPIO_Output_M0_S2_Pin
-                          |GPIO_Output_M0_S1_Pin|GPIO_Output_M0_S0_Pin|GPIO_Output_LED_DRIVER_RESET_Pin, GPIO_PIN_RESET);
+                          |GPIO_Output_M0_S1_Pin|GPIO_Output_M0_S0_Pin|GPIO_SX1262_NSS_Pin|GPIO_Output_LED_DRIVER_RESET_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pins : STOP_LAMP_Pin VEHICLE_INLAMP1_Pin VEHICLE_INLAMP2_Pin BONNET_LAMP_Pin
                            RIGHT_SIGNAL_Pin DYH_GPIO7_Pin FRONT_LAMP_Pin BACK_LAMP_Pin */
@@ -1120,9 +1121,9 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_Init(DYH_BUSY_INPUT_GPIO_Port, &GPIO_InitStruct);
 
   /*Configure GPIO pins : GPIO_Output_M1_S2_Pin GPIO_Output_M1_S1_Pin GPIO_Output_M1_S0_Pin GPIO_Output_M0_S2_Pin
-                           GPIO_Output_M0_S1_Pin GPIO_Output_M0_S0_Pin GPIO_Output_LED_DRIVER_RESET_Pin */
+                           GPIO_Output_M0_S1_Pin GPIO_Output_M0_S0_Pin GPIO_SX1262_NSS_Pin GPIO_Output_LED_DRIVER_RESET_Pin */
   GPIO_InitStruct.Pin = GPIO_Output_M1_S2_Pin|GPIO_Output_M1_S1_Pin|GPIO_Output_M1_S0_Pin|GPIO_Output_M0_S2_Pin
-                          |GPIO_Output_M0_S1_Pin|GPIO_Output_M0_S0_Pin|GPIO_Output_LED_DRIVER_RESET_Pin;
+                          |GPIO_Output_M0_S1_Pin|GPIO_Output_M0_S0_Pin|GPIO_SX1262_NSS_Pin|GPIO_Output_LED_DRIVER_RESET_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -1182,6 +1183,8 @@ static void MX_GPIO_Init(void)
   HAL_NVIC_SetPriority(EXTI15_10_IRQn, 5, 0);
   HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
 
+/* USER CODE BEGIN MX_GPIO_Init_2 */
+/* USER CODE END MX_GPIO_Init_2 */
 }
 
 /* USER CODE BEGIN 4 */

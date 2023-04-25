@@ -2,5 +2,5 @@
 ../features/BodyControlMAIN/Src/BodyControlMAIN.c:58:6:BodyControlMAIN_SWInit	4	static
 ../features/BodyControlMAIN/Src/BodyControlMAIN.c:70:6:BodyControlMAIN_StartUP	8	static
 ../features/BodyControlMAIN/Src/BodyControlMAIN.c:96:6:BodyControlMAIN_Routine	8	static
-../features/BodyControlMAIN/Src/BodyControlMAIN.c:120:6:BodyControlMAIN_Process	4	static
-../features/BodyControlMAIN/Src/BodyControlMAIN.c:133:6:BodyControlMAIN	8	static
+../features/BodyControlMAIN/Src/BodyControlMAIN.c:145:6:BodyControlMAIN_Process	4	static
+../features/BodyControlMAIN/Src/BodyControlMAIN.c:158:6:BodyControlMAIN	8	static

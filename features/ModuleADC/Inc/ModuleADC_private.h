@@ -48,13 +48,20 @@ Adc_Type adcModule = {0};
 
  U32 Process_AnalogSignals_ReadChannel(U8 MUX_SELECT, U8 SELECT_PIN);
 
+
+ EEM_U16 calculateMotorSpeedLeft(adc_st* analogHandle);
+ EEM_U16 calculateMotorSpeedRight(adc_st* analogHandle);
+ DirectionMode_Type getMotorDirection(adc_st* analogHandle);
+
  //@INFO: Public Function Decleration
  U16 getWheelAngle(adc_st* analogHandle);
  U16 getBrakeParam(adc_st* analogHandle);
  U16 getGasParam(adc_st* analogHandle);
 
- void setMotorSpeed1( BCM_Module_st* BCM_MS1_SpeedHandle , adc_st* analogHandle);
-	
+ void setMotorSpeed1  ( BCM_Module_st* BCM_MS1_SpeedHandle , adc_st* analogHandle);
+ void setAnalogSignals( BCM_Module_st* BCM_MS1_ModeHandle , adc_st* analogHandle);
+
+
 #endif /*__ADC_MODULE_PRIVATE_H__ */	
 
 /*********************** END OF FILE ********************************************/

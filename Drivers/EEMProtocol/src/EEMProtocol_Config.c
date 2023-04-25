@@ -237,16 +237,16 @@ void EEM_SET_IDENTIFIERS(void)
 	ID[MSG19_INDEX].Pages.reserved 		= NOT_RESERVED ;
 	ID[MSG19_INDEX].Pages.dataPoint 	= DATAPAGE_0 ;
 	ID[MSG19_INDEX].Pages.messageID 	= MESSAGE19 ;
-	ID[MSG19_INDEX].Pages.DA 			= BCM_NODE ;
-	ID[MSG19_INDEX].Pages.SA 			= MS1_NODE ;
+	ID[MSG19_INDEX].Pages.DA 			= MS1_NODE  ;
+	ID[MSG19_INDEX].Pages.SA 			= BCM_NODE ;
 	BCM_MSG.Message19_ID = ID[MSG19_INDEX].identifier ;
 
 	ID[MSG20_INDEX].Pages.priority 		= PRIORITY_001 ;
 	ID[MSG20_INDEX].Pages.reserved 		= NOT_RESERVED ;
 	ID[MSG20_INDEX].Pages.dataPoint 	= DATAPAGE_0 ;
 	ID[MSG20_INDEX].Pages.messageID 	= MESSAGE20 ;
-	ID[MSG20_INDEX].Pages.DA 			= BCM_NODE ;
-	ID[MSG20_INDEX].Pages.SA 			= MS2_NODE ;
+	ID[MSG20_INDEX].Pages.DA 			= MS2_NODE  ;
+	ID[MSG20_INDEX].Pages.SA 			= BCM_NODE ;
 	BCM_MSG.Message20_ID = ID[MSG20_INDEX].identifier ;
 
 	ID[MSG21_INDEX].Pages.priority 		= PRIORITY_011 ;

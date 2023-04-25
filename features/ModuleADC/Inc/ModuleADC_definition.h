@@ -174,7 +174,8 @@ typedef struct
 	U16 	(*getWheelAngle )( adc_st* analogHandle );
 	U16 	(*getBrakeParam )( adc_st* analogHandle );
 	U16 	(*getGasParam 	)( adc_st* analogHandle );
-	void 	(*setMotorSpeed1)( BCM_Module_st* BCM_MS1_SpeedHandle , adc_st* analogHandle);
+	void 	(*setMotorSpeed)( BCM_Module_st* BCM_MS1_SpeedHandle , adc_st* analogHandle);
+	void	(*setAnalogSignals )( BCM_Module_st* BCM_MS1_ModeHandle , adc_st* analogHandle);
 }AdcOps_Type;
 	
 typedef struct
@@ -183,7 +184,13 @@ typedef struct
 	adc_st*		obj;
 }Adc_Type;
 	
-	
+/******************* APPLICATION SPECIFIC PARAMETERS *********************************/
+typedef enum
+{
+	IDLE = 0 ,
+	FORWARD  ,
+	BACKWARD
+}DirectionMode_Type;
 	
 	
 #endif /*__ADC_MODULE_DEFINITION_H__ */	

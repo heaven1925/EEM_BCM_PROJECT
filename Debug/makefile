@@ -24,7 +24,9 @@ RM := rm -rf
 -include Middlewares/Third_Party/FreeRTOS/Source/portable/GCC/ARM_CM4F/subdir.mk
 -include Middlewares/Third_Party/FreeRTOS/Source/CMSIS_RTOS_V2/subdir.mk
 -include Middlewares/Third_Party/FreeRTOS/Source/subdir.mk
+-include Drivers/SX1262/src/subdir.mk
 -include Drivers/STM32F4xx_HAL_Driver/Src/subdir.mk
+-include Drivers/RFAdaptor/src/subdir.mk
 -include Drivers/EEMProtocol/src/subdir.mk
 -include Core/Startup/subdir.mk
 -include Core/Src/subdir.mk
@@ -68,6 +70,9 @@ default.size.stdout \
 OBJDUMP_LIST += \
 EGE_AKSV2_2023.list \
 
+OBJCOPY_HEX += \
+EGE_AKSV2_2023.hex \
+
 
 # All Target
 all: main-build
@@ -76,8 +81,8 @@ all: main-build
 main-build: EGE_AKSV2_2023.elf secondary-outputs
 
 # Tool invocations
-EGE_AKSV2_2023.elf EGE_AKSV2_2023.map: $(OBJS) $(USER_OBJS) C:\Users\AtakanErtekin\Desktop\Elektromobil\ WorkSpace\EEM_BCM_PROJECT\STM32F446ZETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "EGE_AKSV2_2023.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\AtakanErtekin\Desktop\Elektromobil WorkSpace\EEM_BCM_PROJECT\STM32F446ZETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="EGE_AKSV2_2023.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+EGE_AKSV2_2023.elf EGE_AKSV2_2023.map: $(OBJS) $(USER_OBJS) C:\Users\atakan.ertekin\Desktop\WorkSpace\ElectricDriver_CodeSpace\EEM_BCM_PROJECT\STM32F446ZETX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "EGE_AKSV2_2023.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m4 -T"C:\Users\atakan.ertekin\Desktop\WorkSpace\ElectricDriver_CodeSpace\EEM_BCM_PROJECT\STM32F446ZETX_FLASH.ld" --specs=nosys.specs -Wl,-Map="EGE_AKSV2_2023.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -91,12 +96,17 @@ EGE_AKSV2_2023.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	@echo 'Finished building: $@'
 	@echo ' '
 
+EGE_AKSV2_2023.hex: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O ihex $(EXECUTABLES) "EGE_AKSV2_2023.hex"
+	@echo 'Finished building: $@'
+	@echo ' '
+
 # Other Targets
 clean:
-	-$(RM) EGE_AKSV2_2023.elf EGE_AKSV2_2023.list EGE_AKSV2_2023.map default.size.stdout
+	-$(RM) EGE_AKSV2_2023.elf EGE_AKSV2_2023.hex EGE_AKSV2_2023.list EGE_AKSV2_2023.map default.size.stdout
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_HEX)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'

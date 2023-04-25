@@ -385,7 +385,7 @@ typedef struct __PACKED
 	union __PACKED{
 		EEM_U8 payload[8];
 		struct __PACKED{
-			EEM_U16 BCM_MS1_Speed     	; /*  */
+			EEM_U16 BCM_MS1_Speed  : 16   ; /*  */
 		}SPN;
 	}Message11;
 
@@ -393,7 +393,7 @@ typedef struct __PACKED
 	union __PACKED{
 		EEM_U8 payload[8];
 		struct __PACKED{
-			EEM_U64 BCM_MS2_Speed     	 : 64  ; /*  */
+			EEM_U16 BCM_MS2_Speed  : 16  ; /*  */
 		}SPN;
 	}Message12;
 

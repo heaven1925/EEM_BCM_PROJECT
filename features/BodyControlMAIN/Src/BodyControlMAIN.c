@@ -104,7 +104,29 @@ void BodyControlMAIN_Routine(void)
 	}
 	else
 	{
-		adcModule.ops.setMotorSpeed1( &BCM_MSG, adcModule.obj );
+		/* Set Motor Speeds */
+		adcModule.ops.setMotorSpeed( &BCM_MSG, adcModule.obj );
+		/* Set Motor Directions */
+		adcModule.ops.setAnalogSignals( &BCM_MSG, adcModule.obj );
+
+#ifndef TEST_ADC_V1
+
+		BCM_MSG.Message04.payload[0] = (uint8_t)(adcModule.obj->RS_VRx >> 8 );
+		BCM_MSG.Message04.payload[1] = (uint8_t)(adcModule.obj->RS_VRx & 0xFF );
+
+		BCM_MSG.Message04.payload[2] = (uint8_t)(adcModule.obj->RS_VRy >> 8 );
+		BCM_MSG.Message04.payload[3] = (uint8_t)(adcModule.obj->RS_VRy & 0xFF );
+
+		BCM_MSG.Message04.payload[4] = (uint8_t)(adcModule.obj->LS_VRx >> 8 );
+		BCM_MSG.Message04.payload[5] = (uint8_t)(adcModule.obj->LS_VRx & 0xFF );
+
+		BCM_MSG.Message04.payload[6] = (uint8_t)(adcModule.obj->LS_VRy >> 8 );
+		BCM_MSG.Message04.payload[7] = (uint8_t)(adcModule.obj->LS_VRy & 0xFF );
+
+#else
+
+#endif
+
 	}
 
 
